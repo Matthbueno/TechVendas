@@ -13,21 +13,41 @@
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
         
-        
-        
-        Title="Tech Vendas" Height="450" Width="800">
-
+        Title="Tech Vendas" Height="600" Width="900" WindowStartupLocation="CenterScreen">
 
     <Grid>
+        <!-- Dividimos a tela em duas linhas: Topo (Menu) e Resto (Conteúdo) -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Linha 0: Ajusta ao tamanho do menu -->
+            <RowDefinition Height="*"/>
+            <!-- Linha 1: Ocupa todo o espaço restante -->
+        </Grid.RowDefinitions>
 
-        <TextBlock Text="Menu Principal" HorizontalAlignment="Center" Margin="20" FontSize="20"/>
+        <!-- CABEÇALHO / MENU -->
+        <Border Grid.Row="0" Background="{DynamicResource MaterialDesign.Brush.Primary}" Padding="10" 
+                TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Primary.Foreground}">
+            <Grid>
+                <TextBlock Text="Tech Vendas" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="10,0,0,0"/>
 
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <!-- Botão de Voltar -->
+                    <Button Content="🡠 Voltar" Width="90" Margin="5,5,15,5" Background="Transparent" Foreground="White" BorderBrush="White" Click="BtnVoltar_Click"/>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="Cadastros" Width="100" Margin="10" Click="BtnCadastros_Click"/>
-            <Button Content="Vendas" Width="100" Margin="10" Click="BtnVendas_Click"/>
-        </StackPanel>
+                    <!-- Botão de Início -->
+                    <Button Content="Início" Width="100" Margin="5" Background="Transparent" Foreground="White" BorderBrush="White" Click="BtnInicio_Click"/>
+                    
+                    <!-- Botão de Seleção de Aba -->
+                    <Button Content="Client" Width="120" Margin="5" Foreground="White" BorderBrush="White" Click="BtnClients_Click"/>
+                    <Button Content="Produtos" Width="120" Margin="5" Foreground="White" BorderBrush="White" Click="BtnProdutos_Click"/>
+                    <Button Content="Pedidos" Width="120" Margin="5" Foreground="White" BorderBrush="White" Click="BtnPedidos_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
 
-        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Margin="0,100,0,0"/>
+        <!-- ÁREA DE NAVEGAÇÃO -->
+        <!-- É aqui dentro que as telas (UserControls) que fizemos antes vão aparecer -->
+        <Frame Grid.Row="1" Name="MainFrame" NavigationUIVisibility="Hidden"/>
+
     </Grid>
 </Window>

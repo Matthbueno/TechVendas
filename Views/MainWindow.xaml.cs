@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using TechVendas.Views; // Supondo que você salvou as telas na pasta Views
 
 namespace TechVendas
 {
@@ -20,18 +8,43 @@ namespace TechVendas
         public MainWindow()
         {
             InitializeComponent();
+
+            // Isso faz a HomeView carregar automaticamente assim que o programa abre!
+            MainFrame.Content = new Views.HomeView();
         }
 
-        // O erro acontece porque este método provavelmente está faltando:
-        private void BtnCadastros_Click(object sender, RoutedEventArgs e)
+        // NOVO: Botão Voltar (Usa o histórico do Frame)
+        private void BtnVoltar_Click(object sender, RoutedEventArgs e)
         {
-            // Sua lógica de navegação aqui
-            // Exemplo: MainFrame.Navigate(new PaginaCadastro());
+            // Verifica se existe alguma tela anterior no histórico antes de voltar
+            if (MainFrame.CanGoBack)
+            {
+                MainFrame.GoBack();
+            }
         }
 
-        private void BtnVendas_Click(object sender, RoutedEventArgs e)
+        // NOVO: Botão Início (Joga a Tela Inicial no Frame)
+        private void BtnInicio_Click(object sender, RoutedEventArgs e)
         {
-            // Sua lógica de navegação aqui
+            MainFrame.Content = new Views.HomeView();
+        }
+
+
+        private void BtnProdutos_Click(object sender, RoutedEventArgs e)
+        {
+            // Instancia a tela de produtos e joga dentro do Frame
+            MainFrame.Content = new ClientView();
+        }
+
+        private void BtnPedidos_Click(object sender, RoutedEventArgs e)
+        {
+            // Instancia a tela de pedidos e joga dentro do Frame
+            MainFrame.Content = new ClientView();
+        }
+
+        private void BtnClients_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            MainFrame.Content = new TechVendas.Views.ClientView(); // Ou o nome que você deu
         }
     }
 }
