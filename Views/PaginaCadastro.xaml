@@ -22,11 +22,7 @@
         <TextBlock Text="Cadastros" HorizontalAlignment="Center" Margin="20" FontSize="20"/>
 
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="Cliente" Width="100" Margin="100" FontSize="20" Click="BtnCadastros_Click"/>
-            <Button Content="Produto" Width="100" Margin="100" FontSize="20" Click="BtnVendas_Click"/>
-        </StackPanel>
 
-        <Frame Name="MainFrame" NavigationUIVisibility="Hidden" Margin="0,100,0,0"/>
+        
     </Grid>
 </Page>
