@@ -25,22 +25,22 @@
         </Grid.RowDefinitions>
 
         <!-- CABEÇALHO / MENU -->
-        <Border Grid.Row="0" Background="{DynamicResource MaterialDesign.Brush.Primary}" Padding="10" 
+        <Border Grid.Row="0" Background="{DynamicResource MaterialDesign.Brush.Primary}" Padding="20" 
                 TextElement.Foreground="{DynamicResource MaterialDesign.Brush.Primary.Foreground}">
             <Grid>
-                <TextBlock Text="Tech Vendas" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="10,0,0,0"/>
+                <TextBlock Text="Tech Vendas" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="-10,0,0,0"/>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <!-- Botão de Voltar -->
-                    <Button Content="🡠 Voltar" Width="90" Margin="5,5,15,5" Background="Transparent" Foreground="White" BorderBrush="White" Click="BtnVoltar_Click"/>
+                    <Button Content="🡠 Voltar" Width="90" Margin="5,5,25,5" Background="Transparent" Foreground="White" BorderBrush="White" Click="BtnVoltar_Click"/>
 
                     <!-- Botão de Início -->
-                    <Button Content="Início" Width="100" Margin="5" Background="Transparent" Foreground="White" BorderBrush="White" Click="BtnInicio_Click"/>
+                    <Button Content="Início" Width="100" Margin="5,5,25,5" Background="Transparent" Foreground="White" BorderBrush="White" Click="BtnInicio_Click"/>
                     
                     <!-- Botão de Seleção de Aba -->
-                    <Button Content="Client" Width="120" Margin="5" Foreground="White" BorderBrush="White" Click="BtnClients_Click"/>
-                    <Button Content="Produtos" Width="120" Margin="5" Foreground="White" BorderBrush="White" Click="BtnProdutos_Click"/>
-                    <Button Content="Pedidos" Width="120" Margin="5" Foreground="White" BorderBrush="White" Click="BtnPedidos_Click"/>
+                    <Button Content="Clientes" Width="120" Margin="1" Foreground="White" Background="Transparent" BorderBrush="White" Click="BtnClients_Click"/>
+                    <Button Content="Produtos" Width="120" Margin="1" Foreground="White" Background="Transparent" BorderBrush="White" Click="BtnProdutos_Click"/>
+                    <Button Content="Pedidos" Width="120" Margin="1" Foreground="White" Background="Transparent" BorderBrush="White" Click="BtnPedidos_Click"/>
                 </StackPanel>
             </Grid>
         </Border>
