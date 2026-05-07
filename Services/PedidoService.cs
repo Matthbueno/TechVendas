@@ -27,13 +27,8 @@ namespace TechVendas.Services
         public List<Pedido> FiltrarPorNome(string nome)
         {
             var pedidos = ObterTodas();
-            return pedidos.Where(pedido => pedido.Client.Nome.ToLower().Contains(nome.ToLower())).ToList();
+            return pedidos.Where(pedido => pedido.Cliente.Nome.ToLower().Contains(nome.ToLower())).ToList();
         }
 
-        public List<Pedido> FiltrarPorId(int id)
-        {
-            var pedidos = ObterTodas();
-            return pedidos.Where(pedido => pedido.Id.ToString().Contains(id.ToString())).ToList();
-        }
     }
 }

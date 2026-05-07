@@ -1,28 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
+using TechVendas.Models;
 
 namespace TechVendas.Views
 {
-    /// <summary>
-    /// Interação lógica para PedidoView.xam
-    /// </summary>
     public partial class PedidoView : UserControl
     {
         public PedidoView()
         {
             InitializeComponent();
+            this.DataContext = new ViewModels.PedidoViewModel();
+        }
+
+        public PedidoView(Client clientePreSelecionado)
+        {
+            InitializeComponent();
+            this.DataContext = new ViewModels.PedidoViewModel(clientePreSelecionado);
         }
     }
 }

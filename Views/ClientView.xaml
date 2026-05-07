@@ -40,17 +40,30 @@
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
                 <DataGridTextColumn Header="Nome do Cliente" Binding="{Binding Nome}" Width="*"/>
                 <DataGridTextColumn Header="CPF" Binding="{Binding CPF}" Width="120"/>
-                <DataGridTextColumn Header="Endereço" Binding="{Binding Endereco}" Width="200"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Botões de Ação do Cliente -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,20">
-            <Button Content="Incluir Novo" Command="{Binding IncluirCommand}" Width="100" Margin="5"/>
-            <Button Content="Editar" Command="{Binding EditarCommand}" Width="80" Margin="5"/>
-            <Button Content="Salvar" Command="{Binding SalvarCommand}" Width="80" Margin="5" Background="#E2F0D9"/>
-            <Button Content="Excluir" Command="{Binding ExcluirCommand}" Width="80" Margin="5" Background="#FCE4D6"/>
-            <Button Content="Abrir Novo Pedido" Command="{Binding AbrirPedidoCommand}" Width="130" Margin="20,5,5,5" Background="#DDEBF7" FontWeight="Bold"/>
+        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0,0,0,20">
+            <!-- Botões de Ação do Cliente -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="left">
+                <Button Content="Incluir Novo" Command="{Binding IncluirCommand}" Width="100" Margin="5"/>
+                <Button Content="Editar" Command="{Binding EditarCommand}" Width="80" Margin="5"/>
+                <Button Content="Salvar" Command="{Binding SalvarCommand}" Width="80" Margin="5" Background="#E2F0D9" Foreground="Black"/>
+                <Button Content="Excluir" Command="{Binding ExcluirCommand}" Width="80" Margin="5" Background="#FCE4D6" Foreground="Black"/>
+                <Button Content="Abrir Novo Pedido" Command="{Binding AbrirPedidoCommand}" Width="130" Margin="20,0,5,0" Background="#DDEBF7" Foreground="Black" FontWeight="Bold"/>
+            </StackPanel>
+
+            <!-- Procure por algo parecido com isso no seu ClientView.xaml -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="ID:" VerticalAlignment="Center" Margin="5"/>
+                <TextBox Text="{Binding ClientSelecionado.Id}" Width="40" IsReadOnly="True" Margin="5"/>
+                <TextBlock Text="Nome:" VerticalAlignment="Center" Margin="5"/>
+                <TextBox Text="{Binding ClientSelecionado.Nome, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="5"/>
+                <TextBlock Text="CPF:" VerticalAlignment="Center" Margin="5"/>
+                <TextBox Text="{Binding ClientSelecionado.CPF, UpdateSourceTrigger=PropertyChanged}" Width="150" Margin="5"/>
+            </StackPanel>
+
+
         </StackPanel>
 
         <!-- Filtros do Histórico de Pedidos -->

@@ -23,17 +23,12 @@ namespace TechVendas.Services
             File.WriteAllText(filePath, json);
         }
 
-        // Filtro de produtos por nome ou id
+        // Filtro de produtos por nome
         public List<Produto> FiltrarPorNome(string nome)
         {
             var produtos = ObterTodas();
             return produtos.Where(produto => produto.Nome.ToLower().Contains(nome.ToLower())).ToList();
         }
 
-        public List<Produto> FiltrarPorId(int id)
-        {
-            var produtos = ObterTodas();
-            return produtos.Where(produto => produto.Id.ToString().Contains(id.ToString())).ToList();
-        }
     }
 }
