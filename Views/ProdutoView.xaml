@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="TechVendas.Views.ProdutoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="800"
+             Background="White">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Filtros -->
+            <RowDefinition Height="*"/>
+            <!-- Grid -->
+            <RowDefinition Height="Auto"/>
+            <!-- Formulário e Ações -->
+        </Grid.RowDefinitions>
+
+        <!-- Filtros de Estoque -->
+        <GroupBox Header="Filtros de Produtos" Grid.Row="0" Margin="0,0,0,10" Padding="10">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Nome:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox Width="150" Text="{Binding FiltroNome, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,15,0"/>
+
+                <TextBlock Text="Código:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox Width="80" Text="{Binding FiltroCodigo, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,15,0"/>
+
+                <TextBlock Text="Valor de:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox Width="70" Text="{Binding FiltroValorMin, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,5,0"/>
+                <TextBlock Text="até:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox Width="70" Text="{Binding FiltroValorMax, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- Grid de Produtos -->
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Produtos}" SelectedItem="{Binding ProdutoSelecionado}" 
+                  AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" Margin="0,0,0,10"
+                  HeadersVisibility="Column" AlternatingRowBackground="#F5F5F5">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Código" Binding="{Binding Codigo}" Width="100"/>
+                <DataGridTextColumn Header="Descrição do Produto" Binding="{Binding Nome}" Width="*"/>
+                <DataGridTextColumn Header="Valor" Binding="{Binding Valor, StringFormat=C}" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Formulário de Cadastro/Edição -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Form -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal" DataContext="{Binding ProdutoSelecionado}" VerticalAlignment="Center">
+                <StackPanel Margin="0,0,15,0">
+                    <TextBlock Text="ID" Foreground="Gray"/>
+                    <TextBox Text="{Binding Id}" Width="50" IsReadOnly="True" Background="#EEEEEE"/>
+                </StackPanel>
+                <StackPanel Margin="0,0,15,0">
+                    <TextBlock Text="Código" Foreground="Gray"/>
+                    <TextBox Text="{Binding Codigo}" Width="100"/>
+                </StackPanel>
+                <StackPanel Margin="0,0,15,0">
+                    <TextBlock Text="Nome do Produto" Foreground="Gray"/>
+                    <TextBox Text="{Binding Nome}" Width="250"/>
+                </StackPanel>
+                <StackPanel Margin="0,0,10,0">
+                    <TextBlock Text="Valor Unitário" Foreground="Gray"/>
+                    <TextBox Text="{Binding Valor}" Width="100"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- Ações -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom">
+                <Button Content="Incluir Novo" Command="{Binding IncluirCommand}" Width="100" Margin="5"/>
+                <Button Content="Salvar" Command="{Binding SalvarCommand}" Width="80" Margin="5" Background="#E2F0D9"/>
+                <Button Content="Excluir" Command="{Binding ExcluirCommand}" Width="80" Margin="5" Background="#FCE4D6"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,134 @@
+﻿<UserControl x:Class="TechVendas.Views.PedidoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="700"
+             Background="White">
+
+    <Grid Margin="15" IsEnabled="{Binding PodeEditar}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Seleção de Client -->
+            <RowDefinition Height="Auto"/>
+            <!-- Adição de Produtos -->
+            <RowDefinition Height="*"/>
+            <!-- Grid Itens do Pedido -->
+            <RowDefinition Height="Auto"/>
+            <!-- Totais e Finalização -->
+        </Grid.RowDefinitions>
+
+        <!-- Seleção de Cliente -->
+        <GroupBox Header="Dados do Cliente" Grid.Row="0" Margin="0,0,0,10" Padding="10">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Selecionar Cliente:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <ComboBox Width="300" 
+                  ItemsSource="{Binding Clientes}" 
+                  SelectedItem="{Binding ClienteSelecionado}" 
+                  DisplayMemberPath="Nome" 
+                  IsEditable="True" 
+                  IsReadOnly="False"
+                  TextSearch.TextPath="Nome"
+                  StaysOpenOnEdit="True"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- 2. Adicionar Produtos -->
+        <GroupBox Header="Inserir Produtos" Grid.Row="1" Margin="0,0,0,10" Padding="10">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Produto:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <ComboBox Width="250" 
+                  ItemsSource="{Binding Produtos}" 
+                  SelectedItem="{Binding ProdutoSelecionado}" 
+                  DisplayMemberPath="Nome" 
+                  IsEditable="True" 
+                  IsReadOnly="False"
+                  TextSearch.TextPath="Nome"
+                  StaysOpenOnEdit="True"
+                  Margin="0,0,15,0"/>
+
+                <TextBlock Text="Qtd:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                <TextBox Width="50" Text="{Binding Quantidade, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,15,0"/>
+
+                <Button Content="Adicionar ao Carrinho" Command="{Binding AdicionarItemCommand}" Width="150" Background="#DEEBF7"/>
+            </StackPanel>
+        </GroupBox>
+
+<!-- Tabela que lista os produtos do carrinho -->
+<DataGrid Grid.Row="2" 
+          ItemsSource="{Binding ItensPedido}" 
+          AutoGenerateColumns="False" 
+          CanUserAddRows="False" 
+          Margin="0,0,0,10"
+          VerticalScrollBarVisibility="Auto">
+    <DataGrid.Columns>
+        <!-- Mostra o Código do Produto que está dentro do ItemPedido -->
+        <DataGridTextColumn Header="Código" Binding="{Binding Produto.Codigo}" Width="100" IsReadOnly="True"/>
+        
+        <!-- Mostra o Nome do Produto -->
+        <DataGridTextColumn Header="Descrição do Produto" Binding="{Binding Produto.Nome}" Width="*" IsReadOnly="True"/>
+        
+        <!-- Mostra o Valor Unitário formatado como Moeda -->
+        <DataGridTextColumn Header="Vlr. Unitário" Binding="{Binding Produto.Valor, StringFormat=c}" Width="120" IsReadOnly="True"/>
+        
+        <!-- Mostra a Quantidade -->
+        <DataGridTextColumn Header="Qtd" Binding="{Binding Quantidade}" Width="80" IsReadOnly="True"/>
+        
+        <!-- Mostra o Subtotal (Vlr * Qtd) calculado na classe ItemPedido -->
+        <DataGridTextColumn Header="Subtotal" Binding="{Binding Subtotal, StringFormat=c}" Width="120" IsReadOnly="True"/>
+
+        <!-- Botão opcional para remover o item se o usuário desistir -->
+        <DataGridTemplateColumn Header="Ações">
+            <DataGridTemplateColumn.CellTemplate>
+                <DataTemplate>
+                    <Button Content="Remover" 
+                            Command="{Binding DataContext.RemoverItemCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" 
+                            CommandParameter="{Binding}"
+                            Foreground="Red" Background="Transparent" BorderBrush="Transparent"/>
+                </DataTemplate>
+            </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+    </DataGrid.Columns>
+</DataGrid>
+
+        <!-- Rodapé: Pagamento e Total -->
+        <Border Grid.Row="3" Background="#F8F9FA" Padding="15" CornerRadius="5" BorderBrush="#E0E0E0" BorderThickness="1">
+            <!-- Rodapé da Tela -->
+            <Grid Grid.Row="3" Background="#F2F2F2" Margin="0,10,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Coluna 0: Botão Finalizar -->
+                    <ColumnDefinition Width="*"/>
+                    <!-- Coluna 1: Espaço/Pagamento -->
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Coluna 2: Total -->
+                </Grid.ColumnDefinitions>
+
+                <!-- 1. Botão Finalizar -->
+                <Button Grid.Column="0" 
+            Content="FINALIZAR PEDIDO" 
+            Command="{Binding SalvarPedidoCommand}" 
+            Width="180" Height="45" 
+            Background="#1976D2" Foreground="White" 
+            FontWeight="Bold" Margin="10"/>
+
+                <!-- 2. Forma de Pagamento -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="Forma de Pagamento: " VerticalAlignment="Center" FontWeight="Bold"/>
+                    <ComboBox Width="150" ItemsSource="{Binding FormasPagamento}" SelectedItem="{Binding FormaPagamentoSelecionada}" />
+                </StackPanel>
+
+                <!-- 3. Total do Pedido -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                    <TextBlock Text="Total do Pedido: " FontSize="18" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding ValorTotal, StringFormat=c}" 
+                   FontSize="22" 
+                   FontWeight="Bold" 
+                   Foreground="Green" 
+                   VerticalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
