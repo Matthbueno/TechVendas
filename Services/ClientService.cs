@@ -1,40 +1,95 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
 using System.Linq;
 using TechVendas.Models;
+using TechVendas.Data;
 
 namespace TechVendas.Services
 {
-    public class ClientService 
+    public class ClientService
     {
-        private readonly string filePath = @"Data\clients.json";
+        private readonly JsonDataService<Client> _dataService;
 
-        public List<Client> ObterTodas()
+        public ClientService()
         {
-            if (!File.Exists(filePath)) return new List<Client>();
-            string json = File.ReadAllText(filePath);
-            return JsonConvert.DeserializeObject<List<Client>>(json);
+            _dataService = new JsonDataService<Client>("clientes");
         }
 
-        public void Salvar(List<Client> clients)
+        public List<Client> ObterTodos()
         {
-            string json = JsonConvert.SerializeObject(clients, Formatting.Indented);
-            File.WriteAllText(filePath, json);
+            return _dataService.LoadData() ?? new List<Client>();
         }
 
-        // Filtro de clientes por nome e cpf
-        public List<Client> FiltrarPorNome(string nome)
+        public List<Client> FiltrarClientes(string nome, string cpf)
         {
-            var clients = ObterTodas();
-            return clients.Where(client => client.Nome.ToLower().Contains(nome.ToLower())).ToList();
+            var query = ObterTodos().AsEnumerable();
+
+            if (!string.IsNullOrWhiteSpace(nome))
+                query = query.Where(c => c.Nome != null && c.Nome.ToLower().Contains(nome.ToLower()));
+
+            if (!string.IsNullOrWhiteSpace(cpf))
+                query = query.Where(c => c.CPF != null && c.CPF.ToString().Contains(cpf));
+
+            return query.ToList();
         }
 
-        public List<Client> FiltrarPorCpf(int cpf)
+        public (bool Sucesso, string Mensagem) Salvar(Client client)
         {
-            var clients = ObterTodas();
-            return clients.Where(client => client.CPF.ToString().Contains(cpf.ToString())).ToList();
+            if (!IsCpfValido(client.CPF?.ToString()))
+                return (false, "O CPF digitado é inválido! Por favor, verifique.");
+
+            var lista = ObterTodos();
+            var existente = lista.FirstOrDefault(c => c.Id == client.Id);
+
+            if (existente != null)
+            {
+                existente.Nome = client.Nome;
+                existente.CPF = client.CPF;
+            }
+            else
+            {
+                client.Id = lista.Any() ? lista.Max(c => c.Id) + 1 : 1;
+                lista.Add(client);
+            }
+
+            _dataService.SaveData(lista);
+            return (true, "Cliente salvo com sucesso!");
         }
 
+        public void Excluir(int id)
+        {
+            var lista = ObterTodos();
+            var existente = lista.FirstOrDefault(c => c.Id == id);
+
+            if (existente != null)
+            {
+                lista.Remove(existente);
+                _dataService.SaveData(lista);
+            }
+        }
+
+        private bool IsCpfValido(string cpf)
+        {
+            if (string.IsNullOrWhiteSpace(cpf)) return false;
+
+            cpf = new string(cpf.Where(char.IsDigit).ToArray());
+            if (cpf.Length != 11) return false;
+            if (new string(cpf[0], 11) == cpf) return false;
+
+            int[] multiplicador1 = { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int soma = 0;
+            for (int i = 0; i < 9; i++) soma += int.Parse(cpf[i].ToString()) * multiplicador1[i];
+
+            int resto = soma % 11;
+            resto = resto < 2 ? 0 : 11 - resto;
+            if (int.Parse(cpf[9].ToString()) != resto) return false;
+
+            int[] multiplicador2 = { 11, 10, 9, 8, 7, 6, 5, 4, 3, 2 };
+            soma = 0;
+            for (int i = 0; i < 10; i++) soma += int.Parse(cpf[i].ToString()) * multiplicador2[i];
+
+            resto = soma % 11;
+            resto = resto < 2 ? 0 : 11 - resto;
+            return int.Parse(cpf[10].ToString()) == resto;
+        }
     }
 }
