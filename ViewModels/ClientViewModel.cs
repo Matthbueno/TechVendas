@@ -9,7 +9,7 @@ namespace TechVendas.ViewModels
 {
     public class ClientViewModel : ViewModelBase
     {
-        // 1. DEPENDÊNCIAS E VARIÁVEIS
+        //DEPENDÊNCIAS E VARIÁVEIS
         private readonly ClientService _clientService;
         private readonly PedidoService _pedidoService;
 
@@ -23,7 +23,7 @@ namespace TechVendas.ViewModels
         private bool _filtroPedidosPagos;
         private bool _filtroPedidosEntregues;
 
-        // 2. BINDINGS DA TELA
+        //BINDINGS DA TELA
         public ObservableCollection<Client> Clients
         {
             get => _clients;
@@ -72,7 +72,7 @@ namespace TechVendas.ViewModels
             set { _filtroPedidosEntregues = value; OnPropertyChanged(); FiltrarPedidos(); }
         }
 
-        // 3. ICOMMANDS
+        //ICOMMANDS
         public ICommand IncluirCommand { get; }
         public ICommand EditarCommand { get; }
         public ICommand SalvarCommand { get; }
@@ -82,7 +82,7 @@ namespace TechVendas.ViewModels
         public ICommand MarcarEnviadoCommand { get; }
         public ICommand MarcarRecebidoCommand { get; }
 
-        // 4. CONSTRUTOR
+        //CONSTRUTOR
         public ClientViewModel()
         {
             _clientService = new ClientService();
@@ -90,11 +90,10 @@ namespace TechVendas.ViewModels
 
             CarregarDados();
 
-            // Mapeamento dos Comandos (sem erros agora, todos os métodos existem abaixo)
             IncluirCommand = new RelayCommand(o => Incluir());
             SalvarCommand = new RelayCommand(o => Salvar(), o => ClientSelecionado != null);
             ExcluirCommand = new RelayCommand(o => Excluir(), o => ClientSelecionado != null);
-            EditarCommand = new RelayCommand(o => { }, o => ClientSelecionado != null); // Editar habilitado se selecionado
+            EditarCommand = new RelayCommand(o => { }, o => ClientSelecionado != null); 
 
             AbrirPedidoCommand = new RelayCommand(o => AbrirNovoPedido(), o => ClientSelecionado != null && ClientSelecionado.Id > 0);
             MarcarPagoCommand = new RelayCommand(p => AlterarStatusPedido(p as Pedido, "Pago"));
@@ -102,7 +101,7 @@ namespace TechVendas.ViewModels
             MarcarRecebidoCommand = new RelayCommand(p => AlterarStatusPedido(p as Pedido, "Recebido"));
         }
 
-        // 5. MÉTODOS DA TELA (SOMENTE UI LÓGICA)
+        //MÉTODOS DA TELA (SOMENTE UI LÓGICA)
         private void CarregarDados()
         {
             Clients = new ObservableCollection<Client>(_clientService.ObterTodos());
@@ -164,7 +163,7 @@ namespace TechVendas.ViewModels
 
             if (_pedidoService.AlterarStatus(pedido.Id, novoStatus))
             {
-                FiltrarPedidos(); // Atualiza a grid
+                FiltrarPedidos();
                 MessageBox.Show($"Status alterado para '{novoStatus}'.", "Sucesso", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
