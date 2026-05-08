@@ -50,7 +50,6 @@ namespace TechVendas.Services
             return false;
         }
 
-        // NOVO MÉTODO: Toda a regra de gerar um pedido real veio para cá!
         public (bool Sucesso, string Mensagem) Salvar(Pedido pedido)
         {
             // Barreira de segurança na Service

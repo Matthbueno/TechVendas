@@ -40,14 +40,12 @@ namespace TechVendas.Services
 
         public (bool Sucesso, string Mensagem) Salvar(Produto produto)
         {
-            // 1. BARREIRA DE VALIDAÇÃO (Regra de Negócio)
             if (string.IsNullOrWhiteSpace(produto.Nome) || string.IsNullOrWhiteSpace(produto.Codigo))
                 return (false, "O Nome e o Código do produto são obrigatórios!");
 
             if (produto.Valor <= 0)
                 return (false, "O Valor do produto deve ser maior que zero!");
 
-            // 2. LÓGICA DE SALVAR
             var lista = ObterTodos();
             var existente = lista.FirstOrDefault(p => p.Id == produto.Id);
 

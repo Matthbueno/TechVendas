@@ -10,17 +10,17 @@ namespace TechVendas.ViewModels
 {
     public class PedidoViewModel : ViewModelBase
     {
-        // 1. SERVIÇOS DO DOMÍNIO
+        //SERVIÇOS DO DOMÍNIO
         private readonly PedidoService _pedidoService;
         private readonly ClientService _clienteService;
         private readonly ProdutoService _produtoService;
 
-        // 2. LISTAS DOS COMBOBOXES
+        //LISTAS DOS COMBOBOXES
         public ObservableCollection<Client> Clientes { get; set; }
         public ObservableCollection<Produto> Produtos { get; set; }
         public ObservableCollection<string> FormasPagamento { get; set; }
 
-        // 3. VARIÁVEIS DA TELA
+        //VARIÁVEIS DA TELA
         private Client _clienteSelecionado;
         public Client ClienteSelecionado { get => _clienteSelecionado; set { _clienteSelecionado = value; OnPropertyChanged(); } }
 
@@ -38,12 +38,12 @@ namespace TechVendas.ViewModels
 
         public decimal ValorTotal => ItensPedido?.Sum(i => i.Subtotal) ?? 0;
 
-        // 4. COMANDOS
+        //COMANDOS
         public ICommand AdicionarItemCommand { get; }
         public ICommand RemoverItemCommand { get; }
         public ICommand SalvarPedidoCommand { get; }
 
-        // 5. CONSTRUTOR
+        //CONSTRUTOR
         public PedidoViewModel(Client clientePreSelecionado = null)
         {
             // Instancia os nossos serviços de negócio
@@ -68,7 +68,7 @@ namespace TechVendas.ViewModels
             SalvarPedidoCommand = new RelayCommand(o => SalvarPedido(), o => ClienteSelecionado != null && ItensPedido.Any() && !string.IsNullOrWhiteSpace(FormaPagamentoSelecionada));
         }
 
-        // 6. MÉTODOS DE TELA (LÓGICA VISUAL)
+        //MÉTODOS DE TELA (LÓGICA VISUAL)
         private void AdicionarItem()
         {
             if (ProdutoSelecionado == null || Quantidade <= 0) return;

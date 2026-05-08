@@ -53,7 +53,7 @@
                 <Button Content="Abrir Novo Pedido" Command="{Binding AbrirPedidoCommand}" Width="130" Margin="20,0,5,0" Background="#DDEBF7" Foreground="Black" FontWeight="Bold"/>
             </StackPanel>
 
-            <!-- Procure por algo parecido com isso no seu ClientView.xaml -->
+            
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Text="ID:" VerticalAlignment="Center" Margin="5"/>
                 <TextBox Text="{Binding ClientSelecionado.Id}" Width="40" IsReadOnly="True" Margin="5"/>

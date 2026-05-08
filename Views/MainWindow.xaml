@@ -16,7 +16,6 @@
         Title="Tech Vendas" Height="600" Width="900" WindowStartupLocation="CenterScreen">
 
     <Grid>
-        <!-- Dividimos a tela em duas linhas: Topo (Menu) e Resto (Conteúdo) -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <!-- Linha 0: Ajusta ao tamanho do menu -->
@@ -46,7 +45,6 @@
         </Border>
 
         <!-- ÁREA DE NAVEGAÇÃO -->
-        <!-- É aqui dentro que as telas (UserControls) que fizemos antes vão aparecer -->
         <Frame Grid.Row="1" Name="MainFrame" NavigationUIVisibility="Hidden"/>
 
     </Grid>
