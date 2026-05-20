@@ -39,6 +39,10 @@ namespace TechVendas.Services
 
             var lista = ObterTodos();
             var existente = lista.FirstOrDefault(c => c.Id == client.Id);
+            var existeCpf = lista.FirstOrDefault(c => c.CPF == client.CPF && c.Id != client.Id);
+            
+            if(existeCpf != null)
+                return (false, "Já existe um cliente cadastrado com este CPF! Por favor, verifique.");
 
             if (existente != null)
             {
@@ -67,7 +71,7 @@ namespace TechVendas.Services
             }
         }
 
-        private bool IsCpfValido(string cpf)
+        public bool IsCpfValido(string cpf)
         {
             if (string.IsNullOrWhiteSpace(cpf)) return false;
 
@@ -90,6 +94,7 @@ namespace TechVendas.Services
             resto = soma % 11;
             resto = resto < 2 ? 0 : 11 - resto;
             return int.Parse(cpf[10].ToString()) == resto;
+
         }
     }
 }
