@@ -5,7 +5,7 @@ using System.Linq;
 using TechVendas.Models;
 using TechVendas.Services;
 
-namespace TechVendas.Tests.Services
+namespace TechVendas.Tests.ClientServices
 {
     [TestClass]
     public class FiltrarClienteTest
