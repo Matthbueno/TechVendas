@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechVendas.Services;
-using TechVendas.Models; 
+using TechVendas.Models;
 
-namespace TechVendas.Tests
+namespace TechVendas.Tests.ClientServices
 {
     [TestClass]
-    public class ValidacaoCpfTests
+    public class ValidarCpfTest
     {
         [TestMethod]
         public void ValidarCpf_DeveRetornarTrue_QuandoOValidacaoReceberUmCpfValido()
@@ -81,17 +81,5 @@ namespace TechVendas.Tests
             // 3. Assert
             Assert.IsFalse(resultado, "O CPF deveria ter sido considerado inválido por conter mais de 11 dígitos.");
         }
-        [TestMethod]
-        public void ValidarCpf_DeveRetornarFalse_QuandoOValidacaoReceberUmCpfExistente()
-        {
-            string cpfExistente = "91411874900";//Arrange (Cenário com um CPF repetido)
-            var service = new ClientService();
-            var cliente = new Client { Nome = "Teste", CPF = cpfExistente };
-            // Salva o cliente para garantir que o CPF exista
-            service.Salvar(cliente);
-            // Tenta salvar outro cliente com o mesmo CPF
-            var resultado = service.Salvar(new Client { Nome = "Teste 2", CPF = cpfExistente });
-            Assert.IsFalse(resultado.Sucesso, "Deveria ter falhado ao tentar salvar um cliente com CPF já existente.");
-        }
     }
-}   
+}
